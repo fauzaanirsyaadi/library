@@ -14,10 +14,12 @@ $ git clone https://github.com/(user)/(repository).git
 $ cd folder-name
 
 2. With Python 3.6 and Pip installed
-$ pip install -r requirements.txt
+
 $ pip install virtualenv
 $ virtualenv env 
 $ source env/Scripts/activate.bat
+$ pip install -r requirements.txt
+
 to stop 
 $ deactive
 

@@ -35,6 +35,39 @@ def get_users():
 # def get_user(current_user: User):
 # 	return current_user.get_json()
 
+@app.route('/login_users/', methods = ['POST'])
+def login_users():
+    data = request.get_json()
+    if not 'email' in data and not 'password' in data:
+        return jsonify({
+            'error' : 'Bad Request',
+            'message' : 'Email or password must be given'
+        }), 400
+    
+    try:
+        user = user.query.filter_by(email = data["email"]).first_or_404()
+    except:
+        return jsonify ({
+            "message" : "Invalid email or password!"
+        }), 401
+
+    payload = {'userID': user.userID, 'email': user.email}
+
+    encoded_jwt = jwt.encode(payload, "secret", algorithm="HS256")
+
+    if bcrypt.check_password_hash(user.password, data["password"]):
+        return jsonify ({
+            'userID': user.userID, 
+            'name': user.name, 
+            'email': user.email, 
+            'password' : user.password,
+            'access_token': encoded_jwt.decode('utf-8')
+        })
+    else:
+        return jsonify ({
+            "message" : "Invalid email or password!"
+        }), 401
+
 @app.route('/users/<id>/')
 def get_user(id):
     print(id)
@@ -48,7 +81,7 @@ def get_user(id):
 		'phone':user.phone
     }
 
-@app.route('/user/', methods=['POST'])
+@app.route('/users/', methods=['POST'])
 def create_user():
 	data = request.get_json()
 	if not 'userName' in data or not 'email' in data or 'password' not in data:
@@ -76,7 +109,7 @@ def create_user():
 	return {
         'userId': u.userId, 'userName': u.userName, 'email': u.email
     }, 201
-
+        
 # @app.route('/user/token/', methods=['POST'])
 # def get_token():
 # 	try:

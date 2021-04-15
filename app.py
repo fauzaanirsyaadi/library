@@ -54,4 +54,4 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 import view
 
 if __name__ == '__main__':
-	app.run(Debug=True)
+	app.run(debug=True)

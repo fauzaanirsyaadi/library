@@ -14,12 +14,18 @@ $ git clone https://github.com/(user)/(repository).git
 $ cd folder-name
 
 2. With Python 3.6 and Pip installed:
+
+$ pip3 install pipenv
+$ pipenv install requests
+
+$ pip install --user pipenv
+
 $ virtualenv --python=python3 env --no-site-packages
 $ source env/bin/activate
 $ pip install -r requirements.txt
 $ python -m flask
 
-3. Create a PostgreSQL user with the username and password postgres and create a database called library:
+1. Create a PostgreSQL user with the username and password postgres and create a database called library:
 
 $ createuser --interactive --pwprompt
 $ createdb (dabase_name)
